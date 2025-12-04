@@ -1,0 +1,8 @@
+[package]
+name = "aoc-2015"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+indoc = "2.0.7"
+itertools = "0.14.0"
