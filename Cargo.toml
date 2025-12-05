@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 indoc = "2.0.7"
 itertools = "0.14.0"
+md5 = "0.8.0"
