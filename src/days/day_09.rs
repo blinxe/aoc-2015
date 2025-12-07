@@ -17,10 +17,11 @@ fn parse_input(input: &str) -> (Vec<String>, Map) {
             let distance = words.nth(1).unwrap().parse().unwrap();
             cities.insert(from.clone());
             cities.insert(to.clone());
-            let mut cities = [from, to];
-            cities.sort();
-            let [from, to] = cities;
-            ((from, to), distance)
+            if from < to {
+                ((from, to), distance)
+            } else {
+                ((to, from), distance)
+            }
         })
         .collect();
 

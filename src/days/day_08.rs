@@ -30,11 +30,7 @@ fn to_mem(repr: &str) -> String {
 fn escape(raw: &str) -> String {
     let mut out = String::from('"');
     for c in raw.chars() {
-        if match c {
-            '\\' => true,
-            '"' => true,
-            _ => false,
-        } {
+        if c == '\\' || c == '"' {
             out.push('\\');
         }
         out.push(c);

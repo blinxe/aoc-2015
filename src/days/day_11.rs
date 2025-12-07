@@ -21,23 +21,18 @@ fn is_valid(pw: &[char]) -> bool {
         return false;
     }
 
-    let mut doubledouble = false;
     for i in 0..pw.len() - 3 {
         if pw[i] == pw[i + 1] {
             for j in i + 2..pw.len() - 1 {
                 if pw[j] != pw[i] && pw[j] == pw[j + 1] {
-                    doubledouble = true;
-                    break;
+                    return true;
                 }
             }
             break;
         }
     }
-    if !doubledouble {
-        return false;
-    }
 
-    true
+    false
 }
 
 fn solve_part_1(input: &str) {
@@ -65,7 +60,7 @@ fn solve_part_2(input: &str) {
     }
 
     let pw: String = pw.iter().collect();
-    println!("New password: {}", pw);
+    println!("New new password: {}", pw);
 }
 
 pub fn part_1() {

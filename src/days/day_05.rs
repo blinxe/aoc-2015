@@ -2,7 +2,7 @@ use crate::utils::input::read_input;
 
 fn is_nice_v1(s: &str) -> bool {
     let vowels = "aeiou";
-    let has_3_vowels = s.chars().filter(|c| vowels.contains(*c)).count() >= 3;
+    let has_3_vowels = s.chars().filter(|&c| vowels.contains(c)).count() >= 3;
 
     let has_double = (0..s.len() - 1).any(|i| s.chars().nth(i) == s.chars().nth(i + 1));
 

@@ -14,14 +14,13 @@ fn solve_part_2(input: &str) {
     let mut floor = 0;
     let mut pos = 0;
     for (i, c) in input.chars().enumerate() {
-        match c {
-            '(' => floor += 1,
-            _ => {
-                floor -= 1;
-                if floor < 0 {
-                    pos = i + 1;
-                    break;
-                }
+        if c == '(' {
+            floor += 1;
+        } else {
+            floor -= 1;
+            if floor < 0 {
+                pos = i + 1;
+                break;
             }
         }
     }
