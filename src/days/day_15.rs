@@ -5,7 +5,7 @@ use crate::utils::input::read_input;
 
 #[derive(Debug)]
 struct Ingredient {
-    name: String,
+    _name: String,
     properties: [i32; 5],
 }
 
@@ -20,7 +20,10 @@ fn parse_input(input: &str) -> Vec<Ingredient> {
                 .map(|m| m.as_str().parse::<i32>().unwrap())
                 .collect_array()
                 .unwrap();
-            Ingredient { name, properties }
+            Ingredient {
+                _name: name,
+                properties,
+            }
         })
         .collect()
 }

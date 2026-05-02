@@ -32,9 +32,7 @@ fn solve_part_1(input: &str) {
     for (k, vv) in map {
         for v in vv {
             let re = Regex::new(&k).unwrap();
-            println!("{}", k);
             re.find_iter(&medicine)
-                .inspect(|m| println!("{:?}", m.range()))
                 .map(|m| {
                     let mut new = medicine.clone();
                     new.replace_range(m.range(), &v);
@@ -46,7 +44,45 @@ fn solve_part_1(input: &str) {
     println!("Distinct new molecules: {}", distinct.len());
 }
 
-fn solve_part_2(input: &str) {}
+fn parse_input_v2(input: &str) -> (HashMap<String, String>, String) {
+    let map = input
+        .lines()
+        .take_while(|line| !line.is_empty())
+        .map(|line| {
+            let mut parts = line.split(" => ");
+            let src = parts.next().unwrap().to_owned();
+            let dst = parts.next().unwrap().to_owned();
+            (dst, src)
+        })
+        .collect();
+
+    let medicine = input.lines().last().unwrap().to_owned();
+
+    (map, medicine)
+}
+
+fn solve_part_2(input: &str) {
+    let (map, medicine) = parse_input_v2(input);
+
+    let mut active: HashSet<String> = HashSet::new();
+    active.insert(medicine);
+    let mut step = 0;
+    while !active.contains("e") {
+        let mut next: HashSet<String> = HashSet::new();
+        for s in active {
+            for (dst, src) in map.iter() {
+                for (pos, _) in s.match_indices(dst) {
+                    let mut new = s.clone();
+                    new.replace_range(pos..pos + dst.len(), src);
+                    next.insert(new);
+                }
+            }
+        }
+        active = next;
+        step += 1;
+        println!("Step {}: {}", step, active.len());
+    }
+}
 
 pub fn part_1() {
     let input = read_input(module_path!());
@@ -70,7 +106,15 @@ mod test {
         super::solve_part_1(EXAMPLE_1);
     }
 
-    const EXAMPLE_2: &str = EXAMPLE_1;
+    const EXAMPLE_2: &str = indoc! {"
+        e => H
+        e => O
+        H => HO
+        H => OH
+        O => HH
+
+        HOHOHO
+    "};
 
     #[test]
     fn test_part_2() {
